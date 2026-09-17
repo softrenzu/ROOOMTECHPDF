@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b31">
+  <meta name="description" content="PDFをブラウザ内だけで編集・保存できる無料のPDFエディタ">
+  <title>ROOOMTECH PDF</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235c63ff'/%3E%3Cpath d='M18 12h21l9 9v31H18z' fill='white'/%3E%3Cpath d='M39 12v11h10' fill='none' stroke='%23b8bcff' stroke-width='4'/%3E%3Cpath d='M25 39l13-13 5 5-13 13-7 2z' fill='%235c63ff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v5h14v-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12m0 0 4.5-4.5M12 16l-4.5-4.5M5 20h14"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7 4 12l5 5M5 12h8a6 6 0 0 1 6 6"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 7 5 5-5 5m4-5h-8a6 6 0 0 0-6 6"/></symbol>
+    <symbol id="i-pointer" viewBox="0 0 24 24"><path d="m5 3 14 9-6 2-3 6z"/></symbol>
+    <symbol id="i-text-edit" viewBox="0 0 24 24"><path d="M4 5h10M9 5v14m-4 0h8M16 15l4-4 2 2-4 4-3 1z"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 5h14M12 5v14m-4 0h8"/></symbol>
+    <symbol id="i-square" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/></symbol>
+    <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></symbol>
+    <symbol id="i-line" viewBox="0 0 24 24"><path d="m5 19 14-14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m5 19 14-14m-7 0h7v7"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10-3.5-3.5-10 10zM14 6.5l3.5 3.5"/></symbol>
+    <symbol id="i-highlight" viewBox="0 0 24 24"><path d="m4 15 8-10 5 4-8 10H4zm9 4h7"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5-5 4 4 3-3 4 4"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m4 15 9-10 7 7-7 8H8zM10 20h10"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 5v6h-6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16m-10 4v6m4-6v6M8 7l1-3h6l1 3m2 0-1 14H7L6 7"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-fit" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M9 20H4v-5m11 5h5v-5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6z"/><path d="m9 12 2 2 4-5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16zM14 7l3 3"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="8" cy="7" r="1"/><circle cx="16" cy="7" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="17" r="1"/><circle cx="16" cy="17" r="1"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="ROOOMTECH PDF">
+        <span class="brand-mark"><span>R</span></span>
+        <span class="brand-copy"><strong>ROOOMTECH PDF</strong><small>ブラウザPDF編集</small></span>
+      </div>
+      <div class="document-title" id="documentTitle">
+        <svg><use href="#i-file"/></svg>
+        <span>PDFを開いてください</span>
+      </div>
+      <div class="top-actions">
+        <span class="privacy-badge"><svg><use href="#i-shield"/></svg>端末内で処理</span>
+        <button class="button ghost" id="openButton" type="button"><svg><use href="#i-upload"/></svg><span>PDFを開く</span></button>
+        <button class="button primary" id="exportButton" type="button" disabled><svg><use href="#i-download"/></svg><span>保存</span></button>
+      </div>
+    </header>
+
+    <div class="commandbar" aria-label="文書操作">
+      <div class="command-group">
+        <button class="icon-button" id="undoButton" type="button" title="元に戻す" disabled><svg><use href="#i-undo"/></svg></button>
+        <button class="icon-button" id="redoButton" type="button" title="やり直す" disabled><svg><use href="#i-redo"/></svg></button>
+      </div>
+      <span class="divider"></span>
+      <div class="page-navigation">
+        <button class="icon-button" id="prevPageButton" type="button" title="前のページ" disabled><svg><use href="#i-left"/></svg></button>
+        <span class="page-counter"><input id="pageNumberInput" inputmode="numeric" value="0" aria-label="ページ番号" disabled><span>/</span><strong id="pageCount">0</strong></span>
+        <button class="icon-button" id="nextPageButton" type="button" title="次のページ" disabled><svg><use href="#i-right"/></svg></button>
+      </div>
+      <span class="divider"></span>
+      <div class="zoom-controls">
+        <button class="icon-button" id="zoomOutButton" type="button" title="縮小" disabled>−</button>
+        <select id="zoomSelect" aria-label="表示倍率" disabled>
+          <option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option><option value="2">200%</option>
+        </select>
+        <button class="icon-button" id="zoomInButton" type="button" title="拡大" disabled>＋</button>
+        <button class="icon-button" id="fitButton" type="button" title="画面に合わせる" disabled><svg><use href="#i-fit"/></svg></button>
+      </div>
+      <span class="command-spacer"></span>
+      <div class="page-actions">
+        <button class="text-button" id="rotatePageButton" type="button" disabled><svg><use href="#i-rotate"/></svg><span>回転</span></button>
+        <button class="text-button" id="duplicatePageButton" type="button" disabled><svg><use href="#i-copy"/></svg><span>複製</span></button>
+        <button class="text-button" id="addBlankPageButton" type="button" disabled><svg><use href="#i-plus"/></svg><span>白紙</span></button>
+        <button class="text-button danger" id="deletePageButton" type="button" disabled><svg><use href="#i-trash"/></svg><span>削除</span></button>
+      </div>
+    </div>
+
+    <main class="workspace">
+      <aside class="pages-panel" aria-label="ページ一覧">
+        <div class="panel-heading"><span>ページ</span><span class="count-pill" id="sidebarPageCount">0</span></div>
+        <div class="thumbnail-list" id="thumbnailList"></div>
+      </aside>
+
+      <section class="editor-panel">
+        <nav class="toolbox" aria-label="編集ツール">
+          <button class="tool active" type="button" data-tool="select" title="選択"><svg><use href="#i-pointer"/></svg><span>選択</span></button>
+          <button class="tool" type="button" data-tool="replaceText" title="元の文字を白く隠して修正"><svg><use href="#i-text-edit"/></svg><span>文字修正</span></button>
+          <button class="tool" type="button" data-tool="text" title="文字を追加"><svg><use href="#i-text"/></svg><span>文字追加</span></button>
+          <button class="tool" type="button" data-tool="rectangle" title="四角"><svg><use href="#i-square"/></svg><span>四角</span></button>
+          <button class="tool" type="button" data-tool="ellipse" title="楕円"><svg><use href="#i-circle"/></svg><span>楕円</span></button>
+          <button class="tool" type="button" data-tool="line" title="線"><svg><use href="#i-line"/></svg><span>線</span></button>
+          <button class="tool" type="button" data-tool="arrow" title="矢印"><svg><use href="#i-arrow"/></svg><span>矢印</span></button>
+          <button class="tool" type="button" data-tool="draw" title="手書き"><svg><use href="#i-pen"/></svg><span>手書き</span></button>
+          <button class="tool" type="button" data-tool="highlight" title="マーカー"><svg><use href="#i-highlight"/></svg><span>マーカー</span></button>
+          <button class="tool" type="button" data-tool="image" title="画像を追加"><svg><use href="#i-image"/></svg><span>画像</span></button>
+          <button class="tool" type="button" data-tool="whiteout" title="白塗り"><svg><use href="#i-eraser"/></svg><span>白塗り</span></button>
+        </nav>
+
+        <div class="tool-options" id="toolOptions">
+          <label class="color-control" title="色"><span>色</span><input type="color" id="colorInput" value="#e43b4f"></label>
+          <label><span>太さ</span><input type="range" id="strokeInput" min="1" max="16" value="3"><output id="strokeOutput">3</output></label>
+          <label><span>透明度</span><input type="range" id="opacityInput" min="10" max="100" value="100"><output id="opacityOutput">100%</output></label>
+          <label class="font-option"><span>文字</span><input type="number" id="fontSizeInput" min="8" max="96" value="18"><span>px</span></label>
+          <span class="option-hint" id="toolHint">オブジェクトを選んで移動・サイズ変更できます</span>
+        </div>
+
+        <div class="canvas-viewport" id="dropZone">
+          <div class="drop-indicator" id="dropIndicator">ここにPDFをドロップ</div>
+          <section class="empty-state" id="emptyState">
+            <div class="empty-icon"><svg><use href="#i-file"/></svg><span class="edit-spark"><svg><use href="#i-edit"/></svg></span></div>
+            <h1>PDFをここにドロップ</h1>
+            <p>文字修正、図形、手書き、画像挿入、ページ整理ができます。</p>
+            <button class="button primary large" id="emptyOpenButton" type="button"><svg><use href="#i-upload"/></svg>PDFを選ぶ</button>
+            <div class="privacy-note"><svg><use href="#i-shield"/></svg><span>ファイルはサーバーへ送信されません</span></div>
+          </section>
+
+          <div class="canvas-stage" id="canvasStage" hidden>
+            <div class="canvas-shell" id="canvasShell">
+              <canvas id="editorCanvas" aria-label="PDF編集キャンバス"></canvas>
+            </div>
+          </div>
+
+          <div class="selection-toolbar" id="selectionToolbar" hidden>
+            <button type="button" id="editSelectionButton"><svg><use href="#i-edit"/></svg><span>編集</span></button>
+            <button type="button" id="copySelectionButton"><svg><use href="#i-copy"/></svg><span>複製</span></button>
+            <button type="button" class="danger" id="deleteSelectionButton"><svg><use href="#i-trash"/></svg><span>削除</span></button>
+          </div>
+        </div>
+
+        <footer class="statusbar">
+          <span id="statusText">PDFを開くと編集を始められます</span>
+          <span class="status-spacer"></span>
+          <span id="pageSizeText"></span>
+          <span class="local-status"><span class="status-dot"></span>ローカル処理</span>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="textDialog" class="text-dialog">
+    <form method="dialog" id="textForm">
+      <div class="dialog-header">
+        <div><span class="eyebrow" id="dialogEyebrow">文字を追加</span><h2 id="dialogTitle">内容を入力</h2></div>
+        <button class="icon-button" value="cancel" aria-label="閉じる"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <label class="field"><span>文字</span><textarea id="textValue" rows="3" placeholder="ここに文字を入力" required></textarea></label>
+      <div class="dialog-grid">
+        <label class="field"><span>文字サイズ</span><div class="input-suffix"><input id="dialogFontSize" type="number" min="8" max="96" value="18"><span>px</span></div></label>
+        <label class="field"><span>文字色</span><input id="dialogColor" type="color" value="#172033"></label>
+        <label class="field"><span>書体</span><select id="dialogFontWeight"><option value="400">標準</option><option value="700">太字</option></select></label>
+      </div>
+      <p class="dialog-tip" id="dialogTip">クリックした場所に文字を追加します。</p>
+      <div class="dialog-actions"><button class="button ghost" value="cancel">キャンセル</button><button class="button primary" id="confirmTextButton" value="default">反映する</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="exportDialog" class="export-dialog">
+    <form method="dialog" id="exportForm">
+      <div class="dialog-header"><div><span class="eyebrow">PDFを書き出す</span><h2>保存設定</h2></div><button class="icon-button" value="cancel" aria-label="閉じる"><svg><use href="#i-close"/></svg></button></div>
+      <label class="field"><span>ファイル名</span><div class="input-suffix wide"><input id="exportFilename" type="text" value="編集済み.pdf"><span>.pdf</span></div></label>
+      <fieldset class="quality-options"><legend>画質</legend><label><input type="radio" name="quality" value="1.5"><span><strong>標準</strong><small>軽いファイル</small></span></label><label><input type="radio" name="quality" value="2" checked><span><strong>高画質</strong><small>おすすめ</small></span></label><label><input type="radio" name="quality" value="3"><span><strong>最高画質</strong><small>印刷向け</small></span></label></fieldset>
+      <p class="dialog-tip">編集内容をページへ統合して、新しいPDFを作成します。</p>
+      <div class="export-progress" id="exportProgress" hidden><span class="progress-bar"><i id="exportProgressBar"></i></span><span id="exportProgressText">準備中…</span></div>
+      <div class="dialog-actions"><button class="button ghost" value="cancel">キャンセル</button><button class="button primary" id="confirmExportButton" value="default"><svg><use href="#i-download"/></svg>PDFを保存</button></div>
+    </form>
+  </dialog>
+
+  <input id="pdfFileInput" type="file" accept="application/pdf,.pdf" hidden>
+  <input id="imageFileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
